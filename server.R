@@ -49,12 +49,12 @@
    
     Degrees$State <- tolower(Degrees$State)
     Degrees$State <- str_trim(Degrees$State,side="right")
-    colnames(Degrees)[2:22] <- paste("Y",colnames(Degrees)[2:22],"Y",sep="")
+    #colnames(Degrees)[2:22] <- paste("Y",colnames(Degrees)[2:22],"Y",sep="")
     
     
     Num_deg$State <- tolower(Num_deg$State)
     Num_deg$State <- str_trim(Num_deg$State,side="right")
-    colnames(Num_deg)[2:22] <- paste("Y",colnames(Num_deg)[2:22],"Y",sep="")
+    #colnames(Num_deg)[2:22] <- paste("Y",colnames(Num_deg)[2:22],"Y",sep="")
     
     
     
@@ -73,22 +73,28 @@
                  ), ...)
     }
  
+    
     observeEvent(input$yearnum,{
-      year <- paste("Y",input$yearnum,"Y",sep="")
+      #year <- paste("Y",input$yearnum,"Y",sep="")
+      year <- input$yearnum
       state_data %>%
       ggvis(~long,~lat) %>%
       group_by(group) %>%
       layer_paths(fill = as.name(year)) %>%
+      scale_numeric("fill", range=c("lightblue","darkblue")) %>%
         add_title(title="Degrees Awarded per 1000 Individuals in 18-24 Year Old Pop") %>%
        bind_shiny("ggvisPlot")
     })
+
     
     observeEvent(input$yearnum,{
-      year <- paste("Y",input$yearnum,"Y",sep="")
+     # year <- paste("Y",input$yearnum,"Y",sep="")
+      year <- input$yearnum
       state_data_num %>%
         ggvis(~long,~lat) %>%
         group_by(group) %>%
         layer_paths(fill = as.name(year)) %>%
+        scale_numeric("fill", range=c("lightblue","darkblue")) %>%
         add_title(title = "Total Bachelors Degrees Awarded") %>%
         bind_shiny("ggvisPlot2")
     })
